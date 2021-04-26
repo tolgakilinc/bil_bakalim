@@ -1,9 +1,9 @@
-import 'package:bil_bakalim/hata.dart';
-import 'package:bil_bakalim/sorular.dart';
+import 'file:///C:/Users/furka/AndroidStudioProjects/bil_bakalim/lib/HataYonetimi/hata.dart';
+import 'file:///C:/Users/furka/AndroidStudioProjects/bil_bakalim/lib/Oyun/sorular.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:bil_bakalim/bitir.dart';
+import 'file:///C:/Users/furka/AndroidStudioProjects/bil_bakalim/lib/Oyun/bitir.dart';
 import 'package:bil_bakalim/hakkinda.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -90,6 +90,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        leading: Icon(
+          Icons.access_alarm,
+          color: Colors.white,
+        ),
         title: Text(
           'Bil Bakalım - Bilgi Yarışması',
           style: TextStyle(color: Colors.yellowAccent),
@@ -109,6 +113,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
+              CircleAvatar(
+                  radius: 55, child: Image.asset('assets/images/logo.png')),
               Divider(
                 height: 25,
               ),

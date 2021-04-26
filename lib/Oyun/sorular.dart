@@ -1,6 +1,6 @@
 //import 'dart:convert';
 import 'dart:async';
-import 'package:bil_bakalim/bitir.dart';
+import 'file:///C:/Users/furka/AndroidStudioProjects/bil_bakalim/lib/Oyun/bitir.dart';
 import 'package:flutter/material.dart';
 
 class Sorular extends StatefulWidget {
@@ -251,7 +251,7 @@ class _SorularState extends State<Sorular> {
                     children: [
                       Text(
                         sorular[mevcutsoru]['soru'].toString(),
-                        style: TextStyle(fontSize: 32),
+                        style: TextStyle(fontSize: 28),
                         textAlign: TextAlign.center,
                       ),
                     ],
