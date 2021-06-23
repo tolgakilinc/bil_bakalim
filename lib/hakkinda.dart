@@ -30,7 +30,7 @@ class _HakkindaState extends State<Hakkinda> {
                   ),
                 ),
               ),
-              Expanded(child: Text('   Bu uygulama Dr. Öğretim Üyesi Ahmet Cevahir  ÇINAR tarafından yürütülen 331456 kodlu MOBİL PROGRAMLAMA DERSİ KAPSAMINDA 193301056 numaralı Tolga Furkan KILINÇ tarafından 30 Nisan 2021 günü yapılmıştır.',
+              Expanded(child: Text('Bu uygulama Dr. Öğretim Üyesi Ahmet Cevahir ÇINAR tarafından yürütülen "3301456" kodlu "Mobil Programla" dersi kapsamında "193301056" numaralı "Tolga Furkan Kılınç" tarafından "25 Haziran" günü yapılmıştır.',
                 style: TextStyle(color:Colors.cyan ,fontSize: 17 ), textAlign: TextAlign.center,)),
               ElevatedButton(
                 onPressed: () {

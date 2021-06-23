@@ -1,6 +1,5 @@
-//import 'dart:convert';
 import 'dart:async';
-import 'file:///C:/Users/furka/AndroidStudioProjects/bil_bakalim/lib/Oyun/bitir.dart';
+import 'package:bil_bakalim/Oyun/bitir.dart';
 import 'package:flutter/material.dart';
 
 class Sorular extends StatefulWidget {
@@ -53,7 +52,7 @@ class _SorularState extends State<Sorular> {
     data.add(adSoyad);
     data.add(ogrNo);
     data.add(yas);
-    data.add(puan.toString());
+    data.add(puan);
     data.add(zamaniFormatla(kullanilansure));
     Navigator.push(
         context,

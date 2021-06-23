@@ -1,9 +1,16 @@
-import 'file:///C:/Users/furka/AndroidStudioProjects/bil_bakalim/lib/HataYonetimi/hata.dart';
-import 'file:///C:/Users/furka/AndroidStudioProjects/bil_bakalim/lib/Oyun/sorular.dart';
+import 'package:bil_bakalim/HataYonetimi/hata.dart';
+import 'package:bil_bakalim/Model/HavaDurumu.dart';
+import 'package:bil_bakalim/Oyun/BilinmeyenKelimeler.dart';
+import 'package:bil_bakalim/Oyun/Kaynak.dart';
+import 'package:bil_bakalim/Oyun/SkorListesi.dart';
+import 'package:bil_bakalim/Oyun/nasilOynanir.dart';
+import 'package:bil_bakalim/Oyun/sorular.dart';
+import 'package:bil_bakalim/Services/FileUtils.dart';
+import 'package:bil_bakalim/Services/HavaDurumu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'file:///C:/Users/furka/AndroidStudioProjects/bil_bakalim/lib/Oyun/bitir.dart';
+import 'package:bil_bakalim/Oyun/bitir.dart';
 import 'package:bil_bakalim/hakkinda.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,6 +34,10 @@ class MyApp extends StatelessWidget {
         '/bitir': (context) => Bitir(),
         '/hakkinda': (context) => Hakkinda(),
         '/hata': (context) => Hata(),
+        '/skorListesi': (context) => SkorListesi(),
+        '/nasilOynanir': (context) => nasilOynanir(),
+        '/kaynaklar': (context) => Kaynak(),
+        '/bilinmeyenKelimeler': (context) => BilinmeyenKelimeler(),
       },
     );
   }
@@ -44,10 +55,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void kontrol() {
     if ((adSoyad.length > 0) && (ogrNo.length == 9) && (yas.length > 0)) {
+
       var data = [];
       data.add(adSoyad);
       data.add(ogrNo);
       data.add(yas);
+
+      FileUtils.saveToFile("Giren: ${data[0]}");
+      print(FileUtils.readFromFile().then((value) => print(value)));
+
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -79,6 +95,14 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future<HavaDurumu> havaDurumu;
+
+  @override
+  void initState() {
+    super.initState();
+    havaDurumu = havaBilgisi();
+  }
+
   @override
   Widget build(BuildContext context) {
     bool butonpasif = true;
@@ -89,11 +113,124 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        leading: Icon(
-          Icons.access_alarm,
-          color: Colors.white,
+      drawer: Drawer(
+        child: Column(
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.cyan
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Bil Bakalım\nBilgi Yarışması",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.yellowAccent),
+                    ),
+                    SizedBox(height: 15,),
+                    FutureBuilder(
+                      future: havaDurumu,
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData)
+                          return CircularProgressIndicator();
+                        if (snapshot.hasData) {
+                          return Container(
+                            child: Text(
+                              "Konya: ${snapshot.data.derece} C\n${snapshot.data.aciklama}",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.yellowAccent),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, "/nasilOynanir");
+              },
+              child: Container(
+                width: double.infinity,
+                color: Colors.cyan,
+                height: 50,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 17, left: 10),
+                  child: Text(
+                    "Nasıl oynanır?",
+                    style: TextStyle(color: Colors.yellowAccent),
+                  ),
+                ),
+              ),
+            ),
+            Divider(
+              height: 2,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, "/kaynaklar");
+              },
+              child: Container(
+                width: double.infinity,
+                color: Colors.cyan,
+                height: 50,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 17, left: 10),
+                  child: Text(
+                    "Kaynaklar",
+                    style: TextStyle(color: Colors.yellowAccent),
+                  ),
+                ),
+              ),
+            ),
+            Divider(
+              height: 2,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, "/bilinmeyenKelimeler");
+              },
+              child: Container(
+                width: double.infinity,
+                color: Colors.cyan,
+                height: 50,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 17, left: 10),
+                  child: Text(
+                    "Bilinmeyenler",
+                    style: TextStyle(color: Colors.yellowAccent),
+                  ),
+                ),
+              ),
+            ),
+            Divider(
+              height: 2,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, "/hakkinda");
+              },
+              child: Container(
+                width: double.infinity,
+                color: Colors.cyan,
+                height: 50,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 17, left: 10),
+                  child: Text(
+                    "Hakkında",
+                    style: TextStyle(color: Colors.yellowAccent),
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
+      ),
+      appBar: AppBar(
         title: Text(
           'Bil Bakalım - Bilgi Yarışması',
           style: TextStyle(color: Colors.yellowAccent),
@@ -212,8 +349,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: ElevatedButton(
                   onPressed: butonpasif ? null : kontrol,
-                  child: Text('Yarışmaya Başla'),
+                  child: Tooltip(
+                      message: ("Yarışmayı başlatır."),
+                      child: Text('Yarışmaya Başla')
+                  ),
                 ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/nasilOynanir");
+                },
+                child: Text("Nasıl oynanır?"),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -224,7 +370,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       MaterialPageRoute(builder: (context) => Hakkinda()),
                     );
                   },
-                  child: Text('Hakkında'),
+                  child: Tooltip(
+                      message: 'Hakkında sayfasını gösterir.',
+                      child: Text('Hakkında')),
                 ),
               ),
             ],

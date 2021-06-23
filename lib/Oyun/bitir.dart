@@ -1,3 +1,5 @@
+import 'package:bil_bakalim/Model/Skor.dart';
+import 'package:bil_bakalim/Services/Database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,10 +9,20 @@ class Bitir extends StatefulWidget {
 }
 
 class _BitirState extends State<Bitir> {
+
+  TextDecoration after = TextDecoration.none;
+
+
   @override
   Widget build(BuildContext context) {
     var data = [];
     data = ModalRoute.of(context).settings.arguments;
+
+    DatabaseManagement db = DatabaseManagement();
+    db.insertItem(Skor(
+        adSoyad: data[0].toString(),
+        skor: data[3]
+    ));
 
     return Scaffold(
       appBar: AppBar(
@@ -24,15 +36,7 @@ class _BitirState extends State<Bitir> {
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: Text(
-                  'Bil Bakalım',
-                  style: GoogleFonts.caveat(
-                    textStyle: TextStyle(
-                      fontSize: 72.0,
-                      color: Colors.teal,
-                    ),
-                  ),
-                ),
+                child: AsagiYukari()
               ),
               Expanded(
                 child: Column(
@@ -42,12 +46,23 @@ class _BitirState extends State<Bitir> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      'Puanınız : ' + data[3].toString(),
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 25,
-                          decoration: TextDecoration.underline),
+                    GestureDetector(
+                      onDoubleTap: (){
+                        setState(() {
+                          if(after == TextDecoration.underline){
+                            after = TextDecoration.none;
+                          }else{
+                            after = TextDecoration.underline;
+                          }
+                        });
+                      },
+                      child: Text(
+                        'Puanınız : ' + data[3].toString(),
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 25,
+                            decoration: after),
+                      ),
                     ),
                     SizedBox(
                       height: 20,
@@ -75,7 +90,60 @@ class _BitirState extends State<Bitir> {
                 },
                 child: Text('Yeniden Oyna', style: TextStyle(color: Colors.white),),
               ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/skorListesi');
+                },
+                child: Text('Skor Tablosu', style: TextStyle(color: Colors.white),),
+              ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AsagiYukari extends StatefulWidget {
+
+  @override
+  _AsagiYukariState createState() => _AsagiYukariState();
+}
+
+class _AsagiYukariState extends State<AsagiYukari> with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+  Animation<Offset> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: new Duration(seconds: 1),
+    );
+    _animation = Tween(
+      begin: Offset.zero,
+      end: Offset(0, 0.1),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+    _controller.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SlideTransition(
+      position: _animation,
+      child: Text(
+        'Bil Bakalım',
+        style: GoogleFonts.caveat(
+          textStyle: TextStyle(
+            fontSize: 72.0,
+            color: Colors.teal,
           ),
         ),
       ),

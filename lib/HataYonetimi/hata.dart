@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 class Hata extends StatefulWidget {
@@ -28,7 +27,7 @@ class _HataState extends State<Hata> {
                   ),
                 ),
               ),
-              Text('Ad ve Soyad Giriniz , Öğrenci numarası 9 karakter olmalıdır! ve yaşınız 9 dan büyük olmalıdır'),
+              Text('Ad ve Soyad Giriniz , Öğrenci numarası 9 karakter olmalıdır ve yaşınız 9 dan büyük olmalıdır!'),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
