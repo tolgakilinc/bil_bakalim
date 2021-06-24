@@ -22,7 +22,7 @@ class _SkorListesiState extends State<SkorListesi> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("${titleName}"),
+          title: Text("${titleName}", style: TextStyle(color: Colors.yellowAccent),),
         ),
         body: Container(
           width: double.infinity,
@@ -106,7 +106,7 @@ class _SkorListesiState extends State<SkorListesi> {
                       Navigator.pop(context);
                     },
                     child: ListTile(
-                      tileColor: Colors.blue, // sonra burası değiştirelecek.
+                      tileColor: Colors.blue,
                       title: Text("Bitir sayfasına dönmek için kaydırınız."),
                     ),
                   ),

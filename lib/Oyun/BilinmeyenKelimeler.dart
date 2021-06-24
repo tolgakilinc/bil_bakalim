@@ -7,7 +7,7 @@ class BilinmeyenKelimeler extends StatelessWidget {
     return
       Scaffold(
         appBar: AppBar(
-          title: Text("Bilinmeyen Kelimeler"),
+          title: Text("Bilinmeyen Kelimeler", style: TextStyle(color: Colors.yellowAccent),),
         ),
         body: Container(
           child: Padding(

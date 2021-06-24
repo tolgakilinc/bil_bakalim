@@ -7,7 +7,7 @@ class Kaynak extends StatelessWidget {
     return
       Scaffold(
         appBar: AppBar(
-          title: Text("Kaynaklar"),
+          title: Text("Kaynaklar", style: TextStyle(color: Colors.yellowAccent),),
         ),
 
         body: Container(
